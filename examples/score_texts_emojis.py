@@ -9,12 +9,18 @@ Writes the result to a csv file.
 """
 from __future__ import print_function, division
 import example_helper
+import sys
 import json
-import csv
+import io
 import numpy as np
 from deepmoji.sentence_tokenizer import SentenceTokenizer
 from deepmoji.model_def import deepmoji_emojis
 from deepmoji.global_variables import PRETRAINED_PATH, VOCAB_PATH
+
+if sys.version_info >= (3,0):
+	import csv
+else:
+	import unicodecsv as csv
 
 OUTPUT_PATH = 'test_sentences.csv'
 
@@ -64,7 +70,7 @@ for i, t in enumerate(TEST_SENTENCES):
     scores.append(t_score)
     print(t_score)
 
-with open(OUTPUT_PATH, 'wb') as csvfile:
+with io.open(OUTPUT_PATH, 'w', encoding='utf-8') as csvfile:
     writer = csv.writer(csvfile, delimiter=',', lineterminator='\n')
     writer.writerow(['Text', 'Top5%',
                      'Emoji_1', 'Emoji_2', 'Emoji_3', 'Emoji_4', 'Emoji_5',

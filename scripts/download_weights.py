@@ -1,4 +1,5 @@
 from __future__ import print_function
+from builtins import input
 import os
 from subprocess import call
 
@@ -27,7 +28,7 @@ def prompt():
         if 'TRAVIS' in os.environ:
             choice = 'yes'
         else:
-            choice = raw_input().lower()
+            choice = input().lower()
         if choice in valid:
             return valid[choice]
         else:

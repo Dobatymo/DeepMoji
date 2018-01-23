@@ -10,8 +10,8 @@ import re
 import unicodedata
 import numpy as np
 from text_unidecode import unidecode
-from tokenizer import RE_MENTION, tokenize
-from filter_utils import (
+from .tokenizer import RE_MENTION, tokenize
+from .filter_utils import (
     convert_linebreaks,
     convert_nonbreaking_space,
     correct_length,
@@ -23,6 +23,8 @@ from filter_utils import (
     remove_control_chars,
     remove_variation_selectors,
     separate_emojis_and_text)
+
+from builtins import str
 
 # Only catch retweets in the beginning of the tweet as those are the
 # automatically added ones.
@@ -64,7 +66,7 @@ class WordGenerator():
             that is not allowed.
         """
 
-        if not isinstance(sentence, unicode):
+        if not isinstance(sentence, str):
             raise ValueError("All sentences should be Unicode-encoded!")
         sentence = sentence.strip().lower()
 
@@ -96,7 +98,7 @@ class WordGenerator():
         """ Returns whether a word is ASCII """
 
         try:
-            word.decode('ascii')
+            word.encode('ascii')
             return True
         except (UnicodeDecodeError, UnicodeEncodeError):
             return False
